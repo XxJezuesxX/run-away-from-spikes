@@ -49,7 +49,8 @@ while True:
             pygame.quit()
             exit()
         if event.type == obstacle_timer:
-            obstacle_group.add(Terrains(choice([1, 2, 2, 3, 3, 3])))
+            obstacle_group.add(Terrains(choice([1, 2, 3])))
+            obstacle_group.add(Terrains(choice([1, 2, 3, 3])))
 
     if game_state:
 
