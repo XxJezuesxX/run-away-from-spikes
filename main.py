@@ -51,6 +51,7 @@ while True:
         if event.type == obstacle_timer:
             obstacle_group.add(Terrains(choice([1, 2, 3])))
             obstacle_group.add(Terrains(choice([1, 2, 3, 3])))
+            obstacle_group.add(Terrains(choice([2, 2, 3])))
 
     if game_state:
 
@@ -65,14 +66,14 @@ while True:
         if rel_x < 650:
             screen.blit(sky_surface, (rel_x, 0))
 
-        screen.blit(ground_surface, (0, 470))
-        screen.blit(spike_surface, spike_rect)
-
         player.draw(screen)
         player.update()
 
         obstacle_group.draw(screen)
         obstacle_group.update()
+
+        screen.blit(ground_surface, (0, 470))
+        screen.blit(spike_surface, spike_rect)
 
     pygame.display.update()
     clock.tick(60)

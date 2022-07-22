@@ -31,5 +31,5 @@ class Terrains(pygame.sprite.Sprite):
         self.destroy()
 
     def destroy(self):
-        if self.rect.x <= -20:
+        if self.rect.x <= -50:
             self.kill()

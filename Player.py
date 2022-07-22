@@ -1,7 +1,10 @@
 import pygame
 
+from Terrains import Terrains
+
 
 class Player(pygame.sprite.Sprite):
+
     def __init__(self):
         super().__init__()
 
@@ -22,9 +25,10 @@ class Player(pygame.sprite.Sprite):
 
         self.image = self.images_run_list[self.hero_index]
 
-        self.player_jump = pygame.image.load('graphics/Lava.png').convert_alpha()
-        self.rect = self.image.get_rect(center=(55, 470))
+        self.player_jump = pygame.image.load('graphics/hero1.png').convert_alpha()
+        self.rect = self.image.get_rect(center=(200, 200))
         self.gravity = 0
+        self.is_resting_forward = True
 
     def player_input(self):
         keys = pygame.key.get_pressed()
@@ -43,6 +47,10 @@ class Player(pygame.sprite.Sprite):
 
     def apply_gravity(self):
         self.gravity += 0.9
+        # terrain_group = [Terrains(1), Terrains(2), Terrains(3)]
+        # for terrain in terrain_group:
+        #     if self.rect.bottom == terrain.rect.top:
+        #         self.rect.bottom = terrain.rect.top
         self.rect.y += self.gravity
 
         if self.rect.bottom > 470:
@@ -63,6 +71,7 @@ class Player(pygame.sprite.Sprite):
             if self.hero_index >= len(self.images_run_list):
                 self.hero_index = 0
             self.image = self.images_run_list[int(self.hero_index)]
+            self.is_resting_forward = True
 
         elif keys[pygame.K_a] or keys[pygame.K_LEFT]:
             self.hero_index += 0.15
@@ -70,15 +79,17 @@ class Player(pygame.sprite.Sprite):
                 self.hero_index = 0
             self.image = self.images_run_list[int(self.hero_index)]
             self.image = pygame.transform.flip(self.image, True, False)
+            self.is_resting_forward = False
 
-        # else:
-        #
-        #     if keys[pygame.K_d] or keys[pygame.K_RIGHT]:
-        #         self.image = self.image_rest
-        #         # self.image = pygame.transform.flip(self.image, True, False)
-        #     else:
-        #         self.image = self.image_rest
-        #         self.image = pygame.transform.flip(self.image, True, False)
+        else:
+
+            if self.is_resting_forward:
+                self.image = self.image_rest
+                # self.image = pygame.transform.flip(self.image, True, False)
+            else:
+                self.image = self.image_rest
+                self.image = pygame.transform.flip(self.image, True, False)
+
 
     def update(self):
 
