@@ -39,7 +39,6 @@ class Player(pygame.sprite.Sprite):
             self.direction.x = -5
         else:
             self.direction.x = 0
-            return False
 
     def correct_position(self):
         if self.rect.x > 615:
@@ -52,7 +51,7 @@ class Player(pygame.sprite.Sprite):
         1) gravity,
         2) not falling on the ground, 
         3) not going out of the screen
-        4) not fall on terrain
+        4) not fall from terrain while standing on it
     '''
 
     def physics(self):
@@ -69,19 +68,30 @@ class Player(pygame.sprite.Sprite):
             self.rect.top = 0
 
     # making physics of the game
+
+    '''
+    problems - 
+        1) 
+        2) cant run on the terrain as it stays at a fixed position on it
+    '''
+
     def vertical_collision(self):
         import playground
         can_jump = True
-
+        keys = pygame.key.get_pressed()
         for terrain in playground.terrain_group:
 
-            if self.rect.colliderect(terrain.rect) and can_jump:
-                if self.rect.bottom > terrain.rect.top:
-                    self.rect.bottom = terrain.rect.top
-                    can_jump = False
+            if self.rect.colliderect(terrain.rect) and can_jump and self.image == self.player_jump:
 
-            # elif self.rect.y < 0:
-            #     self.rect.top = terrain.rect.bottom
+                if self.rect.bottom >= terrain.rect.top:
+                    self.rect.bottom = terrain.rect.top
+                    if keys[pygame.K_w] or keys[pygame.K_UP]:
+                        can_jump = False
+                    else:
+                        can_jump = True
+
+        # elif self.rect.y < 0:
+        #     self.rect.top = terrain.rect.bottom
 
     def animate_char(self):
 
