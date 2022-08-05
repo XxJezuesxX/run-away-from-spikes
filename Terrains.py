@@ -20,15 +20,17 @@ class Terrains(pygame.sprite.Sprite):
             self.image = terrain3
 
         self.animation_index = 0
-        self.rect = self.image.get_rect(midbottom=(630, randint(300, 650)))
+        self.rect = self.image.get_rect(midbottom=(630, randint(100, 480)))
+        self.direction = pygame.math.Vector2()
 
-    def destroy_useless_terrain(self):
+    def destroy_useless_terrains(self):
         if self.rect.x <= -100:
             self.kill()
 
     def update(self):
         self.rect.x -= 2
         self.destroy()
+        self.destroy_useless_terrains()
 
     def destroy(self):
         if self.rect.x <= -50:
