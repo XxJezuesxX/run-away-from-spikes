@@ -71,7 +71,6 @@ class Player(pygame.sprite.Sprite):
 
     '''
     problems - 
-        1) 
         2) cant run on the terrain as it stays at a fixed position on it
     '''
 
