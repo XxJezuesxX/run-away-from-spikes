@@ -25,7 +25,7 @@ ground_surface = pygame.image.load("graphics/Shaded_cloud.png").convert()
 spike_surface = pygame.image.load("graphics/Spikes.png").convert_alpha()
 spike_rect = spike_surface.get_rect(center=(-28, 250))
 
-terrain_group = pygame.sprite.Group()
+platform_group = pygame.sprite.Group()
 
 # Timer
 timer = pygame.USEREVENT + randint(0, 1)
@@ -42,10 +42,10 @@ while True:
             pygame.quit()
             exit()
         if event.type == timer:
-            terrain_group.add(Terrains(choice([1, 2, 3])))
-            terrain_group.add(Terrains(choice([1, 2, 3, 3])))
-            terrain_group.add(Terrains(choice([2, 3, 3])))
-            terrain_group.add(Terrains(choice([1, 2, 2])))
+            platform_group.add(Terrains(choice([1, 2, 3])))
+            platform_group.add(Terrains(choice([1, 2, 3, 3])))
+            platform_group.add(Terrains(choice([2, 3, 3])))
+            platform_group.add(Terrains(choice([1, 2, 2])))
 
     if game_state:
 
@@ -61,8 +61,8 @@ while True:
             screen.blit(sky_surface, (rel_x, 0))  #
 
         # calling terrain
-        terrain_group.draw(screen)
-        terrain_group.update()  #
+        platform_group.draw(screen)
+        platform_group.update()  #
 
         # calling the player
         player_draw.draw(screen)
