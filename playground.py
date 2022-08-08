@@ -29,7 +29,7 @@ platform_group = pygame.sprite.Group()
 
 # Timer
 timer = pygame.USEREVENT + randint(0, 1)
-pygame.time.set_timer(timer, randint(1500, 1700))
+pygame.time.set_timer(timer, randint(1100, 1500))
 
 x = 0
 
@@ -81,6 +81,11 @@ while True:
 
         screen.blit(ground_surface, (0, 470))
         screen.blit(spike_surface, spike_rect)
+
+        if player.rect.x == 30:
+            game_state = False
+    else:
+        screen.fill((0, 0, 0))
 
     pygame.display.update()
     clock.tick(60)
