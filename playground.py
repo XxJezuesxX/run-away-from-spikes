@@ -42,10 +42,18 @@ while True:
             pygame.quit()
             exit()
         if event.type == timer:
-            platform_group.add(Terrains(choice([1, 2, 3])))
-            platform_group.add(Terrains(choice([1, 2, 3, 3])))
-            platform_group.add(Terrains(choice([2, 3, 3])))
-            platform_group.add(Terrains(choice([1, 2, 2])))
+            i = randint(0,4)
+            if i == 0:
+                platform_group.add(Terrains(choice([1, 2, 3])))
+                platform_group.add(Terrains(choice([2, 3, 3])))
+            elif i == 1:
+                platform_group.add(Terrains(choice([1, 2, 3, 3])))
+                platform_group.add(Terrains(choice([1, 2, 3])))
+            elif i == 2:
+                platform_group.add(Terrains(choice([2, 3, 3])))
+            elif i == 3:
+                platform_group.add(Terrains(choice([1, 1, 2])))
+                platform_group.add(Terrains(choice([1, 3, 2])))
 
     if game_state:
 

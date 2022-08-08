@@ -28,14 +28,16 @@ class Player(pygame.sprite.Sprite):
         self.player_jump = pygame.image.load('graphics/hero1.png').convert_alpha()
 
         self.is_resting_forward = True
-        # self.direction = pygame.math.Vector2()
+        self.is_jumping = False
 
     def animate_char(self):
 
         keys = pygame.key.get_pressed()
 
+        # animate character when on platform
         if self.rect.bottom != 470:
             self.image = self.player_jump
+            self.is_jumping = True
 
         elif keys[pygame.K_d] or keys[pygame.K_RIGHT]:
 
@@ -69,7 +71,10 @@ class Player(pygame.sprite.Sprite):
     def player_input(self):
         keys = pygame.key.get_pressed()
         if keys[pygame.K_SPACE] or keys[pygame.K_w] or keys[pygame.K_UP]:
-            self.gravity -= 7
+
+            # have to add another condition in the if statement - when the player is standing on the ground
+            if self.rect.bottom == 470:
+                self.gravity -= 20
         elif keys[pygame.K_d] or keys[pygame.K_RIGHT]:
             self.rect.x += 5
         elif keys[pygame.K_a] or keys[pygame.K_LEFT]:
@@ -104,41 +109,27 @@ class Player(pygame.sprite.Sprite):
         if self.rect.top < 0:
             self.rect.top = 0
 
-    # making physics of the game
-
     '''
-    problems - 
-        2) cant run on the terrain as it stays at a fixed position on it
+        problem - 
+            3) unable to land player satisfyingly on the terrain
+            4) player slipping towards left (idk at what condition(s))
     '''
 
+    # when player is on a platform
     def vertical_collision(self):
         import playground
-        can_jump = True
+
         keys = pygame.key.get_pressed()
+
         for platform in playground.platform_group:
 
-            if self.rect.colliderect(platform.rect) and can_jump and self.image == self.player_jump:
-                # if player stands on one of the terrains
-                if self.rect.bottom >= platform.rect.top:
+            if self.rect.colliderect(platform.rect) and self.rect.bottom > platform.rect.centerx and self.is_jumping == True:
 
-                    # took care of y-axis - lets me stay on platform's height (y axis)
-                    self.rect.bottom = platform.rect.top
+                # y-cor - lets me stay on platform's height (y cor)
+                self.rect.bottom = platform.rect.top
 
-                    # player's x cor is changed according to platform's x cor
-                    self.rect.x -= 2
-
-                    # if keys[pygame.K_LEFT] or keys[pygame.K_LEFT] or  keys[pygame.K_LEFT] or  keys[pygame.K_LEFT]:
-                    # # contains the platform's x cors
-                    # where_to_run = [x for x in range(platform.rect.topleft[0], platform.rect.topright[0] + 1)]
-                    #
-                    # for i in where_to_run:
-                    #     if self.rect.x in where_to_run:
-                    #         self.rect.x = i
-
-                    if keys[pygame.K_w] or keys[pygame.K_UP]:
-                        can_jump = False
-                    else:
-                        can_jump = True
+                # x-axis - player's x cor change is aligned to platform's x cor's change
+                self.rect.x -= 2 # terrain and player have the same speed in this case
 
     def update(self):
 

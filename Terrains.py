@@ -18,9 +18,11 @@ class Terrains(pygame.sprite.Sprite):
         elif type == 3:
             terrain3 = pygame.image.load("graphics/ground3.png").convert_alpha()
             self.image = terrain3
+        else:
+            return
 
         self.animation_index = 0
-        self.rect = self.image.get_rect(midbottom=(630, randint(100, 480)))
+        self.rect = self.image.get_rect(midbottom=(680, randint(100, 480)))
 
         # self.direction = pygame.math.Vector2()
         # self.direction.y = -2
